@@ -27,6 +27,43 @@ namespace DAL
             return person;
         }
 
+        public PersonModel GetUserByEmail(string email)
+        {
+            if (email.Length == 0) throw new ArgumentException(nameof(email));
+
+            var person = _context.Persons.FirstOrDefault(p => p.Email == email);
+
+            return person;
+        }
+
+        public PersonModel AddNewUser(UserRegistrationData userRegistrationData)
+        {
+            if (userRegistrationData == null) throw new ArgumentException(nameof(userRegistrationData));
+
+            if (Get(userRegistrationData.Login) == null)
+            {
+                PersonModel person = new PersonModel()
+                {
+                    Name = userRegistrationData.Name,
+                    Lastname = userRegistrationData.LastName,
+                    Email = userRegistrationData.Login,
+                    Password = userRegistrationData.Password,
+                    Admin = false,
+                    RegisterDate = DateTime.Now,
+                    LastVisitDate = DateTime.Now
+                };
+
+                _context.Persons.Add(person);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("User exist!");
+            }
+
+            return _context.Persons.OrderByDescending(p => p.Id).FirstOrDefault();
+        }
+
         public void Create(UserRegistrationData userRegistrationData)
         {
 
@@ -89,6 +126,29 @@ namespace DAL
             _context.SaveChanges();
 
             return true;
+        }
+
+        public int SavePicture(PictureModel pictureModel)
+        {
+            _context.Add(pictureModel);
+            _context.SaveChanges();
+            return pictureModel.Id;
+        }
+
+        public int AddPictureModelToPerson(PictureDTO pictureDto)
+        {
+            var person = Get(pictureDto.UserId);
+            PictureModel picture = new PictureModel
+            {
+                PersonId = pictureDto.UserId,
+                PictureName = pictureDto.PictureName,
+                Picture = pictureDto.Picture,
+                CreationDate = DateTime.Now,
+            };
+            person.pictureModel.Add(picture);
+            _context.SaveChanges();
+            var newint = picture.Id;
+            return newint;
         }
     }
 }

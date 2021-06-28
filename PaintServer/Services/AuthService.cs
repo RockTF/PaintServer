@@ -1,6 +1,6 @@
-﻿using AskMe.Common.Exceptions;
-using DAL.Models;
+﻿using DAL.Models;
 using DTO;
+using Exeptions;
 using PaintServer.Interfaces;
 using PaintServer.Models.DTO;
 using System;
@@ -25,6 +25,24 @@ namespace PaintServer.Services
             if (person == null) throw new AccessLevelException("Discription");
 
             return person;
+        }
+
+        public PersonModel Signup(UserRegistrationData userRegistrationData)
+        {
+            if (userRegistrationData == null) throw new ArgumentException(nameof(userRegistrationData));
+
+            if (_DAL.GetUserByEmail(userRegistrationData.Login) == null)
+            {
+                var person = _DAL.AddNewUser(userRegistrationData);
+
+                if (person == null) throw new AccessLevelException("Database not response");
+
+                return person;
+            }
+            else
+            {
+                throw new AccessLevelException("User with this email exist!");
+            }
         }
 
         public bool UpdatePassword(UpdatePasswordDTO userAutorizationData)

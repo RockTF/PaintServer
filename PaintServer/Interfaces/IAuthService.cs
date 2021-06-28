@@ -8,6 +8,8 @@ namespace PaintServer.Interfaces
     {
         PersonModel Login(UserAutorizationData userAutorizationData);
 
+        PersonModel Signup(UserRegistrationData userRegistrationData);
+
         bool UpdatePassword(UpdatePasswordDTO userAutorizationData);
     }
 }

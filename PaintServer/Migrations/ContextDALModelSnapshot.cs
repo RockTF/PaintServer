@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DAL.Migrations
+namespace PaintServer.Migrations
 {
     [DbContext(typeof(ContextDAL))]
     partial class ContextDALModelSnapshot : ModelSnapshot
@@ -62,11 +62,8 @@ namespace DAL.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EditCount")
+                    b.Property<int>("PersonId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("EditTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Picture")
                         .HasColumnType("nvarchar(max)");

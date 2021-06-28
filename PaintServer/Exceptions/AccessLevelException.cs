@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AskMe.Common.Exceptions
+namespace Exeptions
 {
     public class AccessLevelException : Exception
     {

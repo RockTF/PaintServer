@@ -8,9 +8,11 @@ namespace PaintServer.Interfaces
     {
         PersonModel GetUserByAuthData(UserAutorizationData userAutorizationData);
 
+        PersonModel AddNewUser(UserRegistrationData userRegistrationData);
 
+        PersonModel GetUserByEmail(string email);
 
-
+        int SavePicture(PictureModel pictureModel);
 
         PersonModel Get(int id);
 
@@ -23,5 +25,7 @@ namespace PaintServer.Interfaces
         PersonModel Delete(int id);
 
         void Create(UserRegistrationData userRegistrationData);
+
+        int AddPictureModelToPerson(PictureDTO pictureDto);
     }
 }

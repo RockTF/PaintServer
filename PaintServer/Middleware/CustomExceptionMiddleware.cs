@@ -1,70 +1,53 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Exeptions;
+using Microsoft.AspNetCore.Http;
 using System;
+using System.IO;
 using System.Net;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Askme.Api.Middleware
+namespace Middleware
 {
     public class CustomExceptionMiddleware
     {
-        /// <summary>
-        ///  A function that can process an HTTP request.
-        /// </summary>
         private readonly RequestDelegate _next;
 
         public CustomExceptionMiddleware(RequestDelegate next)
         {
-            _next = next ?? throw new ArgumentNullException(nameof(next));
+            _next = next;
         }
 
-        /// <summary>
-        /// Method that check HttpContext.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public async Task InvokeAsync(HttpContext context)
+        public async Task Invoke(HttpContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
-
             try
             {
                 await _next(context);
             }
-            catch (Exception exception)
+            catch (Exception error)
             {
-                await HandleExceptionAsync(context, exception);
+                var response = context.Response;
+                response.ContentType = "application/json";
+
+                switch (error)
+                {
+                    case AccessLevelException e:
+                        // custom application error
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    case Exception e:
+                        // not found error
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    default:
+                        // unhandled error
+                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        break;
+                }
+
+                var result = JsonSerializer.Serialize(new { message = error?.Message });
+                await response.WriteAsync(result);
             }
-        }
-
-        /// <summary>
-        /// A method that checks for all possible exceptions in a project.
-        /// </summary>
-        /// <remarks>
-        /// Accept HttpContext and Exception; If condition is not met in structure then return status code "500" and
-        /// description: "The server encountered an internal error or misconfiguration and was unable to complete your request.".
-        /// If the condition is met, the method will return the corresponding error description and status code.
-        /// </remarks>
-        /// <param name="context"></param>
-        /// <param name="exception"></param>
-        /// <returns>
-        /// HttpContext.
-        /// </returns>
-        public Task HandleExceptionAsync(HttpContext context, Exception exception)
-        {
-            var code = HttpStatusCode.InternalServerError;
-
-            var errorDescription = exception.GetType() == typeof(AggregateException) ? exception.InnerException?.Message : exception.Message;
-            var exceptionType = exception.GetType() == typeof(AggregateException) ? exception.InnerException?.GetType() : exception.GetType();
-            
-            if (exceptionType == typeof(ArgumentNullException)) code = HttpStatusCode.BadRequest;
-            else if (exceptionType == typeof(ArgumentException)) code = HttpStatusCode.BadRequest;
-
-            context.Response.ContentType = "application/text";
-            context.Response.StatusCode = (int)code;
-            return context.Response.WriteAsync(errorDescription);
         }
     }
 }

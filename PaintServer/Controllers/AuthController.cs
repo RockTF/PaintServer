@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PaintServer.Controllers
 {
-    [Route("api/login")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -22,12 +22,22 @@ namespace PaintServer.Controllers
             _authService = authService;
         }
 
-        [HttpPost]
-        public IActionResult Login([FromBody] UserAutorizationData userAutorizationData)
-        {
-            var person = _authService.Login(userAutorizationData);
+        //[Route("login")]
+        //[HttpPost]
+        //public IActionResult Login([FromBody] UserAutorizationData userAutorizationData)
+        //{
+        //    var person = _authService.Login(userAutorizationData);
 
-            return Ok(person);
+        //    return Ok(person);
+        //}
+
+        //[Route("signup")]
+        [HttpPost]
+        public IActionResult Signup([FromBody] UserRegistrationData userRegistrationData)
+        {
+            var person = _authService.Signup(userRegistrationData);
+
+            return Ok(person.Id);
         }
 
         [HttpPut]
