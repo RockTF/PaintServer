@@ -1,4 +1,4 @@
-﻿using DAL.Models;
+﻿using DAL.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL
@@ -12,5 +12,7 @@ namespace DAL
         public DbSet<PersonModel> Persons { get; set; }
 
         public DbSet<PictureModel> Pictures { get; set; }
+
+        public DbSet<StatisticsModel> Statistics { get; set; }
     }
 }

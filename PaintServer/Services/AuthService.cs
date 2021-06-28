@@ -1,5 +1,4 @@
-﻿using DAL.Models;
-using DTO;
+﻿using DAL.Models.Entity;
 using Exeptions;
 using PaintServer.Interfaces;
 using PaintServer.Models.DTO;
@@ -9,7 +8,7 @@ namespace PaintServer.Services
 {
     public class AuthService : IAuthService
     {
-        public IDAL _DAL;
+        private IDAL _DAL;
 
         public AuthService(IDAL DAL)
         {

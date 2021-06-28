@@ -1,5 +1,4 @@
-﻿using DAL.Models;
-using DTO;
+﻿using DAL.Models.Entity;
 using PaintServer.Models.DTO;
 
 namespace PaintServer.Interfaces

@@ -1,5 +1,5 @@
-﻿using DAL.Models;
-using DTO;
+﻿using DAL.Models.Entity;
+using PaintServer.Models.DTO;
 using System.Collections.Generic;
 
 namespace PaintServer.Interfaces
@@ -27,5 +27,9 @@ namespace PaintServer.Interfaces
         void Create(UserRegistrationData userRegistrationData);
 
         int AddPictureModelToPerson(PictureDTO pictureDto);
+
+        PictureModel GetPictureByID(int pictureId);
+
+        StatisticsModel GetStatisticByUserId(int? id);
     }
 }

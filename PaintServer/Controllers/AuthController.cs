@@ -1,12 +1,6 @@
-﻿using DAL.Models;
-using DTO;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PaintServer.Interfaces;
 using PaintServer.Models.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PaintServer.Controllers
 {

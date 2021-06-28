@@ -1,6 +1,6 @@
-﻿using DAL.Models;
-using DTO;
+﻿using DAL.Models.Entity;
 using PaintServer.Interfaces;
+using PaintServer.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,13 +109,19 @@ namespace DAL
 
         public PersonModel Get(int id)
         {
-            return _context.Persons.Find(id);
+            return _context.Persons.FirstOrDefault(p => p.Id == id);
         }
 
         public PersonModel Get(string email)
         {
-            var person = _context.Persons.Where(s => s.Email == email).FirstOrDefault<PersonModel>();
+            var person = _context.Persons.FirstOrDefault(s => s.Email == email);
             return person;
+        }
+
+        public StatisticsModel GetStatisticByUserId(int? id)
+        {
+            var staistic = _context.Statistics.FirstOrDefault(s => s.PersonId == id);
+            return staistic;
         }
 
         public bool UpdatePassword(PersonModel person)
@@ -138,7 +144,7 @@ namespace DAL
         public int AddPictureModelToPerson(PictureDTO pictureDto)
         {
             var person = Get(pictureDto.UserId);
-            PictureModel picture = new PictureModel
+            var picture = new PictureModel
             {
                 PersonId = pictureDto.UserId,
                 PictureName = pictureDto.PictureName,
@@ -150,5 +156,12 @@ namespace DAL
             var newint = picture.Id;
             return newint;
         }
+
+        public PictureModel GetPictureByID(int pictureId)
+        {
+            var picture = _context.Pictures.FirstOrDefault(p => p.Id == pictureId);
+            return picture;
+        }
+
     }
 }

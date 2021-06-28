@@ -1,6 +1,4 @@
-﻿using DTO;
-
-namespace PaintServer.Models.DTO
+﻿namespace PaintServer.Models.DTO
 {
     public class UpdatePasswordDTO : UserAutorizationData
     {

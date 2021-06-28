@@ -19,7 +19,7 @@ namespace PaintServer.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DAL.Models.PersonModel", b =>
+            modelBuilder.Entity("DAL.Models.Entity.PersonModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace PaintServer.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("DAL.Models.PictureModel", b =>
+            modelBuilder.Entity("DAL.Models.Entity.PictureModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,28 +71,88 @@ namespace PaintServer.Migrations
                     b.Property<string>("PictureName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("personModelId")
+                    b.Property<int>("PictureType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("personModelId");
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Pictures");
                 });
 
-            modelBuilder.Entity("DAL.Models.PictureModel", b =>
+            modelBuilder.Entity("DAL.Models.Entity.StatisticsModel", b =>
                 {
-                    b.HasOne("DAL.Models.PersonModel", "personModel")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Curve")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Dot")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ellipse")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Line")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Polygon")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rectangle")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoundedRectangle")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SmoothCurve")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Triangle")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId")
+                        .IsUnique();
+
+                    b.ToTable("Statistics");
+                });
+
+            modelBuilder.Entity("DAL.Models.Entity.PictureModel", b =>
+                {
+                    b.HasOne("DAL.Models.Entity.PersonModel", "personModel")
                         .WithMany("pictureModel")
-                        .HasForeignKey("personModelId");
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("personModel");
                 });
 
-            modelBuilder.Entity("DAL.Models.PersonModel", b =>
+            modelBuilder.Entity("DAL.Models.Entity.StatisticsModel", b =>
+                {
+                    b.HasOne("DAL.Models.Entity.PersonModel", "personModel")
+                        .WithOne("statisticModel")
+                        .HasForeignKey("DAL.Models.Entity.StatisticsModel", "PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("personModel");
+                });
+
+            modelBuilder.Entity("DAL.Models.Entity.PersonModel", b =>
                 {
                     b.Navigation("pictureModel");
+
+                    b.Navigation("statisticModel");
                 });
 #pragma warning restore 612, 618
         }

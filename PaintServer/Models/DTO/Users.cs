@@ -1,4 +1,4 @@
-﻿namespace DTO
+﻿namespace PaintServer.Models.DTO
 {
     public class Users
     {
