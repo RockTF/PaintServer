@@ -30,18 +30,14 @@ namespace PaintServer.Services
         {
             if (userRegistrationData == null) throw new ArgumentException(nameof(userRegistrationData));
 
-            if (_DAL.GetUserByEmail(userRegistrationData.Login) == null)
-            {
-                var person = _DAL.AddNewUser(userRegistrationData);
+            if (_DAL.GetUserByEmail(userRegistrationData.Login) != null) throw new AccessLevelException("User with this email exist!");
 
-                if (person == null) throw new AccessLevelException("Database not response");
+            var person = _DAL.AddNewUser(userRegistrationData);
 
-                return person;
-            }
-            else
-            {
-                throw new AccessLevelException("User with this email exist!");
-            }
+            if (person == null) throw new AccessLevelException("Database not response");
+
+            return person;
+
         }
 
         public bool UpdatePassword(UpdatePasswordDTO userAutorizationData)

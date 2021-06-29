@@ -16,16 +16,15 @@ namespace PaintServer.Controllers
             _authService = authService;
         }
 
-        //[Route("login")]
-        //[HttpPost]
-        //public IActionResult Login([FromBody] UserAutorizationData userAutorizationData)
-        //{
-        //    var person = _authService.Login(userAutorizationData);
+        [HttpPost]
+        [Route("login")]
+        public IActionResult Login([FromBody] UserAutorizationData userAutorizationData)
+        {
+            var person = _authService.Login(userAutorizationData);
 
-        //    return Ok(person);
-        //}
+            return Ok(person.Id);
+        }
 
-        //[Route("signup")]
         [HttpPost]
         public IActionResult Signup([FromBody] UserRegistrationData userRegistrationData)
         {
