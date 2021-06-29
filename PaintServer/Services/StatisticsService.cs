@@ -5,7 +5,7 @@ using System;
 
 namespace PaintServer.Services
 {
-    public class StatisticsService
+    public class StatisticsService : IStatisticsService
     {
         private IDAL _dal;
 

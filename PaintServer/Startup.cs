@@ -4,10 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Middleware;
 using PaintServer.Interfaces;
 using PaintServer.Services;
-using Middleware;
 
 namespace PaintServer
 {
@@ -27,15 +26,16 @@ namespace PaintServer
             services.AddTransient<IDAL, MSSQLDAL>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IPictureService, PictureService>();
+            services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                //app.UseDeveloperExceptionPage();
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
 
             app.UseMiddleware<CustomExceptionMiddleware>();
 

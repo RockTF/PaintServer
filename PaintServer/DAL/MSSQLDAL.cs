@@ -148,7 +148,7 @@ namespace DAL
             {
                 PersonId = pictureDto.UserId,
                 PictureName = pictureDto.PictureName,
-                Picture = pictureDto.Picture,
+                Picture = pictureDto.PictureContent,
                 CreationDate = DateTime.Now,
             };
             person.pictureModel.Add(picture);
