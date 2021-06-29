@@ -1,7 +1,0 @@
-C:\Users\garaj\source\repos\PaintServer\PaintServer\obj\Debug\net5.0\PaintServer.csproj.AssemblyReference.cache
-C:\Users\garaj\source\repos\PaintServer\PaintServer\obj\Debug\net5.0\PaintServer.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\garaj\source\repos\PaintServer\PaintServer\obj\Debug\net5.0\PaintServer.AssemblyInfoInputs.cache
-C:\Users\garaj\source\repos\PaintServer\PaintServer\obj\Debug\net5.0\PaintServer.AssemblyInfo.cs
-C:\Users\garaj\source\repos\PaintServer\PaintServer\obj\Debug\net5.0\PaintServer.csproj.CoreCompileInputs.cache
-C:\Users\garaj\source\repos\PaintServer\PaintServer\obj\Debug\net5.0\PaintServer.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\garaj\source\repos\PaintServer\PaintServer\obj\Debug\net5.0\PaintServer.MvcApplicationPartsAssemblyInfo.cache
