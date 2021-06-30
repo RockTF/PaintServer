@@ -31,5 +31,7 @@ namespace PaintServer.Interfaces
         PictureModel GetPictureByID(int pictureId);
 
         StatisticsModel GetStatisticByUserId(int? id);
+
+        PictureListDTO GetAllPicturesForUser(int id);
     }
 }

@@ -7,6 +7,8 @@ namespace PaintServer.Interfaces
     {
         int AddPictureToDatabase(PictureDTO picture);
 
-        PictureModel GetPictureByID(int pictureId);
+        PictureToClientDTO GetPictureByID(int pictureId);
+
+        PictureListDTO GetAllPicturesForUser(int userId);
     }
 }

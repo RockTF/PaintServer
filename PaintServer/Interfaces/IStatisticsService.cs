@@ -1,9 +1,10 @@
 ﻿using DAL.Models.Entity;
+using System.Collections.Generic;
 
 namespace PaintServer.Interfaces
 {
     public interface IStatisticsService
     {
-        StatisticsModel GetStatistic(int? id);
+        IEnumerable<PersonModel> GetStatistic(int? id);
     }
 }

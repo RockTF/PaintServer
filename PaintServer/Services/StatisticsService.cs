@@ -2,6 +2,7 @@
 using Exeptions;
 using PaintServer.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace PaintServer.Services
 {
@@ -14,11 +15,11 @@ namespace PaintServer.Services
             _dal = DAL;
         }
 
-        public StatisticsModel GetStatistic(int? id) 
+        public IEnumerable<PersonModel> GetStatistic(int? id) 
         {
             if (id == null) throw new ArgumentException(nameof(id));
 
-            var statistic = _dal.GetStatisticByUserId(id);
+            var statistic = _dal.Get();
 
             if (statistic == null) throw new AccessLevelException("No statistics for this user(");
 

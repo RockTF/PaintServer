@@ -14,8 +14,8 @@ namespace PaintServer.Controllers
             _statisticsService = statisticsService;
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetStatistic([FromQuery] int id)
+        [HttpGet]
+        public IActionResult GetStatistic(int id)
         {
             var statistic = _statisticsService.GetStatistic(id);
             return Ok(statistic);

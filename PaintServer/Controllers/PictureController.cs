@@ -15,8 +15,15 @@ namespace PaintServer.Controllers
             _pictureService = pictureService;
         }
 
+        [HttpGet]
+        public IActionResult GetPictureList([FromQuery] int userId)
+        {
+            var picture = _pictureService.GetAllPicturesForUser(userId);
+            return Ok(picture);
+        }
+
         [HttpGet("{id}")]
-        public IActionResult GetPictureByID([FromQuery] int id)
+        public IActionResult GetPictureByID(int id)
         {
             var picture = _pictureService.GetPictureByID(id);
             return Ok(picture);
@@ -27,7 +34,7 @@ namespace PaintServer.Controllers
         {
             var result = _pictureService.AddPictureToDatabase(pictureDto);
 
-            return Ok();
+            return Ok("Successfully saved");
         }
         
     }

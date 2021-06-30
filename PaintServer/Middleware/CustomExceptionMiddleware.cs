@@ -35,6 +35,10 @@ namespace Middleware
                         // custom application error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
+                    case ArgumentException e:
+                        // not found error
+                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
                     case Exception e:
                         // not found error
                         response.StatusCode = (int)HttpStatusCode.BadRequest;

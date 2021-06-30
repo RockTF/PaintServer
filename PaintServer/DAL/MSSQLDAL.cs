@@ -149,7 +149,8 @@ namespace DAL
                 PersonId = pictureDto.UserId,
                 PictureName = pictureDto.PictureName,
                 Picture = pictureDto.PictureContent,
-                CreationDate = DateTime.Now,
+                CreationDate = pictureDto.CreationDate,
+                PictureType = pictureDto.PictureType
             };
             person.pictureModel.Add(picture);
             _context.SaveChanges();
@@ -163,5 +164,16 @@ namespace DAL
             return picture;
         }
 
+        public PictureListDTO GetAllPicturesForUser(int id)
+        {
+            PictureListDTO pictureListDTO = new PictureListDTO();
+            List<PictureModel> pictures = _context.Pictures.Where(b => b.PersonId == id).ToList();
+            foreach(var picture in pictures)
+            {
+                pictureListDTO.PictureNames.Add(picture.PictureName);
+                pictureListDTO.PictureIds.Add(picture.Id);
+            }
+            return pictureListDTO;
+        }
     }
 }

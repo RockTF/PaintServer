@@ -14,17 +14,32 @@ namespace PaintServer.Services
         }
         public int AddPictureToDatabase(PictureDTO pictureDto)
         {
+            if (pictureDto == null)
+            {
+                throw new ArgumentException("There is no picture recived");
+            }
             return _dal.AddPictureModelToPerson(pictureDto);
         }
 
-        public PictureModel GetPictureByID(int pictureId) 
+        public PictureListDTO GetAllPicturesForUser(int userId)
         {
-            var picture = _dal.GetPictureByID(pictureId);
+            return _dal.GetAllPicturesForUser(userId);
+        }
 
-            if (picture == null) 
+        public PictureToClientDTO GetPictureByID(int pictureId) 
+        {
+            var pictureModel = _dal.GetPictureByID(pictureId);
+
+            if (pictureModel == null) 
             {
                 throw new ArgumentException("Not valid picture ID");
             }
+
+            PictureToClientDTO picture = new PictureToClientDTO
+            {
+                Picture = pictureModel.Picture,
+                PictureType = pictureModel.PictureType
+            };
 
             return picture;
         }
