@@ -18,6 +18,7 @@ namespace PaintServer.Services
         public PersonModel Login(UserAutorizationData userAutorizationData)
         {
             if (userAutorizationData == null) throw new ArgumentException(nameof(userAutorizationData));
+            userAutorizationData.Validate();
 
             var person = _DAL.GetUserByAuthData(userAutorizationData);
 

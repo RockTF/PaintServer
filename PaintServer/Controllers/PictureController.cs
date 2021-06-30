@@ -16,21 +16,22 @@ namespace PaintServer.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetPictureList([FromQuery] int userId)
+        public IActionResult GetPicturesByUserId([FromQuery] int userId)
         {
             var picture = _pictureService.GetAllPicturesForUser(userId);
             return Ok(picture);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetPictureByID(int id)
+        [HttpGet]
+        [Route("picture")]
+        public IActionResult GetPictureByID([FromQuery]int pictureeId)
         {
-            var picture = _pictureService.GetPictureByID(id);
+            var picture = _pictureService.GetPictureByID(pictureeId);
             return Ok(picture);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] PictureDTO pictureDto)
+        public IActionResult SavePicture([FromBody] PictureDTO pictureDto)
         {
             var result = _pictureService.AddPictureToDatabase(pictureDto);
 

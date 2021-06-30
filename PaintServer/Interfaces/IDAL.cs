@@ -14,7 +14,7 @@ namespace PaintServer.Interfaces
 
         int SavePicture(PictureModel pictureModel);
 
-        PersonModel Get(int id);
+        PersonModel GetPersonById(int id);
 
         PersonModel Get(string email);
 
@@ -30,8 +30,10 @@ namespace PaintServer.Interfaces
 
         PictureModel GetPictureByID(int pictureId);
 
-        StatisticsModel GetStatisticByUserId(int? id);
+        StatisticsModel GetStatisticByUserId(int id);
 
         PictureListDTO GetAllPicturesForUser(int id);
+
+        void UpdateStatistics(StatisticsModel statistics);
     }
 }

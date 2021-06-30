@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PaintServer.Models.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,9 +9,9 @@ namespace DAL.Models.Entity
     {
         public PersonModel()
         {
-            pictureModel = new List<PictureModel>();
+             PictureModel = new List<PictureModel>();
         }
-
+        
         public int Id { get; set; }
         public string Name { get; set; }
         public string Lastname { get; set; }
@@ -19,7 +20,18 @@ namespace DAL.Models.Entity
         public bool Admin { get; set; }
         public DateTime RegisterDate { get; set; }
         public DateTime LastVisitDate { get; set; }
-        public ICollection<PictureModel> pictureModel { get; set; }
-        public StatisticsModel statisticModel { get; set; }
+        public ICollection<PictureModel> PictureModel { get; set; }
+        public virtual StatisticsModel StatisticModel { get; set; }
+
+        public PersonModel(UserRegistrationData userRegistrationData)
+        {
+            Name = userRegistrationData.Name;
+            Lastname = userRegistrationData.LastName;
+            Email = userRegistrationData.Login;
+            Password = userRegistrationData.Password;
+            Admin = false;
+            RegisterDate = DateTime.Now;
+            LastVisitDate = DateTime.Now;
+        }
     }
 }

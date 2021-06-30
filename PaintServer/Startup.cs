@@ -24,19 +24,16 @@ namespace PaintServer
             services.AddDbContext<ContextDAL>(options =>
                   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IDAL, MSSQLDAL>();
+
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IPictureService, PictureService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
+
             services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
-
             app.UseMiddleware<CustomExceptionMiddleware>();
 
             app.UseRouting();

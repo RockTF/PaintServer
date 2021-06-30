@@ -1,5 +1,4 @@
-﻿using DAL.Models.Entity;
-using PaintServer.Interfaces;
+﻿using PaintServer.Interfaces;
 using PaintServer.Models.DTO;
 using System;
 
@@ -8,16 +7,23 @@ namespace PaintServer.Services
     public class PictureService : IPictureService
     {
         private IDAL _dal;
-        public PictureService (IDAL DAL)
+        private readonly IStatisticsService _statisticsService;
+
+        public PictureService (IDAL DAL, IStatisticsService statisticsService)
         {
             _dal = DAL;
+            _statisticsService = statisticsService;
         }
+
         public int AddPictureToDatabase(PictureDTO pictureDto)
         {
             if (pictureDto == null)
             {
                 throw new ArgumentException("There is no picture recived");
             }
+
+            _statisticsService.UpdateStatistics(pictureDto);
+
             return _dal.AddPictureModelToPerson(pictureDto);
         }
 

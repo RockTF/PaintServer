@@ -56,15 +56,11 @@ namespace PaintServer.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PersonId = table.Column<int>(type: "int", nullable: false),
-                    Curve = table.Column<int>(type: "int", nullable: false),
-                    Dot = table.Column<int>(type: "int", nullable: false),
-                    Ellipse = table.Column<int>(type: "int", nullable: false),
-                    Line = table.Column<int>(type: "int", nullable: false),
-                    Triangle = table.Column<int>(type: "int", nullable: false),
-                    Polygon = table.Column<int>(type: "int", nullable: false),
-                    Rectangle = table.Column<int>(type: "int", nullable: false),
-                    SmoothCurve = table.Column<int>(type: "int", nullable: false),
-                    RoundedRectangle = table.Column<int>(type: "int", nullable: false)
+                    LastActivity = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FullPictureSize = table.Column<int>(type: "int", nullable: false),
+                    FiguresCountString = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FavoriteFigures = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

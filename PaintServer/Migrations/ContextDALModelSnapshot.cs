@@ -88,34 +88,22 @@ namespace PaintServer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Curve")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FavoriteFigures")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FiguresCountString")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FullPictureSize")
                         .HasColumnType("int");
 
-                    b.Property<int>("Dot")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Ellipse")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Line")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("LastActivity")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("PersonId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Polygon")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rectangle")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoundedRectangle")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SmoothCurve")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Triangle")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -128,31 +116,31 @@ namespace PaintServer.Migrations
 
             modelBuilder.Entity("DAL.Models.Entity.PictureModel", b =>
                 {
-                    b.HasOne("DAL.Models.Entity.PersonModel", "personModel")
-                        .WithMany("pictureModel")
+                    b.HasOne("DAL.Models.Entity.PersonModel", "PersonModel")
+                        .WithMany("PictureModel")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("personModel");
+                    b.Navigation("PersonModel");
                 });
 
             modelBuilder.Entity("DAL.Models.Entity.StatisticsModel", b =>
                 {
-                    b.HasOne("DAL.Models.Entity.PersonModel", "personModel")
-                        .WithOne("statisticModel")
+                    b.HasOne("DAL.Models.Entity.PersonModel", "PersonModel")
+                        .WithOne("StatisticModel")
                         .HasForeignKey("DAL.Models.Entity.StatisticsModel", "PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("personModel");
+                    b.Navigation("PersonModel");
                 });
 
             modelBuilder.Entity("DAL.Models.Entity.PersonModel", b =>
                 {
-                    b.Navigation("pictureModel");
+                    b.Navigation("PictureModel");
 
-                    b.Navigation("statisticModel");
+                    b.Navigation("StatisticModel");
                 });
 #pragma warning restore 612, 618
         }

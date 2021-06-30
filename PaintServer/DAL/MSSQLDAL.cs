@@ -42,16 +42,7 @@ namespace DAL
 
             if (Get(userRegistrationData.Login) == null)
             {
-                PersonModel person = new PersonModel()
-                {
-                    Name = userRegistrationData.Name,
-                    Lastname = userRegistrationData.LastName,
-                    Email = userRegistrationData.Login,
-                    Password = userRegistrationData.Password,
-                    Admin = false,
-                    RegisterDate = DateTime.Now,
-                    LastVisitDate = DateTime.Now
-                };
+                PersonModel person = new PersonModel(userRegistrationData);
 
                 _context.Persons.Add(person);
                 _context.SaveChanges();
@@ -69,16 +60,7 @@ namespace DAL
 
             if (Get(userRegistrationData.Login) == null)
             {
-                PersonModel person = new PersonModel()
-                {
-                    Name = userRegistrationData.Name,
-                    Lastname = userRegistrationData.LastName,
-                    Email = userRegistrationData.Login,
-                    Password = userRegistrationData.Password,
-                    Admin = false,
-                    RegisterDate = DateTime.Now,
-                    LastVisitDate = DateTime.Now
-                };
+                PersonModel person = new PersonModel(userRegistrationData);
 
                 _context.Persons.Add(person);
                 _context.SaveChanges();
@@ -91,7 +73,7 @@ namespace DAL
 
         public PersonModel Delete(int id)
         {
-            PersonModel todoItem = Get(id);
+            PersonModel todoItem = GetPersonById(id);
 
             if (todoItem != null)
             {
@@ -107,7 +89,7 @@ namespace DAL
             return _context.Persons;
         }
 
-        public PersonModel Get(int id)
+        public PersonModel GetPersonById(int id)
         {
             return _context.Persons.FirstOrDefault(p => p.Id == id);
         }
@@ -118,7 +100,7 @@ namespace DAL
             return person;
         }
 
-        public StatisticsModel GetStatisticByUserId(int? id)
+        public StatisticsModel GetStatisticByUserId(int id)
         {
             var staistic = _context.Statistics.FirstOrDefault(s => s.PersonId == id);
             return staistic;
@@ -143,19 +125,15 @@ namespace DAL
 
         public int AddPictureModelToPerson(PictureDTO pictureDto)
         {
-            var person = Get(pictureDto.UserId);
-            var picture = new PictureModel
-            {
-                PersonId = pictureDto.UserId,
-                PictureName = pictureDto.PictureName,
-                Picture = pictureDto.PictureContent,
-                CreationDate = pictureDto.CreationDate,
-                PictureType = pictureDto.PictureType
-            };
-            person.pictureModel.Add(picture);
+            var person = GetPersonById(pictureDto.UserId);
+
+            var picture = new PictureModel(pictureDto);
+
+            person.PictureModel.Add(picture);
+
             _context.SaveChanges();
-            var newint = picture.Id;
-            return newint;
+
+            return picture.Id;
         }
 
         public PictureModel GetPictureByID(int pictureId)
@@ -174,6 +152,12 @@ namespace DAL
                 pictureListDTO.PictureIds.Add(picture.Id);
             }
             return pictureListDTO;
+        }
+
+        public void UpdateStatistics(StatisticsModel statistics)
+        {
+            _context.Statistics.Update(statistics);
+            _context.SaveChanges();
         }
     }
 }
